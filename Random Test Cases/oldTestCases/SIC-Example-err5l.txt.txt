@@ -1,0 +1,47 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    0000    FIRST    STL     RETADR                                               140033
+  10    0003    CLOOP    JSUB    RDREC                                                483039
+  15    0006             LDA     LENGTH                                               000036
+  20    0009             COMP    ZERO                                                 280030
+  25    000C             JEQ     ENDFIL                                               300015
+  30    000F             JSUB    WRREC                                                483061
+  35    0012             J       CLOOP                                                3C0003
+  40    0015    ENDFIL   LDA     EOF                                                  00002A
+  45    0018             STA     BUFFER                                               0C0039
+  50    001B             LDA     THREE                                                00002D
+  55    001E             STA     LENGTH                                               0C0036
+  60    0021             JSUB    WRREC                                                483061
+  65    0024             LDL     RETADR                                               080033
+  70    0027             RSUB                                                         4C0000
+  75    002A    EOF      BYTE    C'EOF'                                               454F46
+  80    002D    THREE    WORD    3                                                    000003
+  85    0030    ZERO     WORD    0                                                    000000
+  90    0033    RETADR   RESW    1                                                    
+  95    0036    LENGTH   RESW    1                                                    
+ 100    0039    BUFFER   RESW    4096                                                 
+ 105    3039    RDREC    LDX     ZERO                                                 040030
+ 110    303C             LDA     ZERO                                                 000030
+ 115    303F    RLOOP    TD      INPUT                                                E0305D
+ 120    3042             JEQ     RLOOP                                                30303F
+ 125    3045             RD      INPUT                                                D8305D
+ 130    3048             COMP    ZERO                                                 280030
+ 135    304B             JEQ     EXIT                                                 303057
+ 140    304E             STCH    BUFFER,X                                             548039
+ 145    3051             TIX     MAXLEN                                               2C305E
+ 150    3054             JLT     RLOOP                                                38303F
+ 155    3057    EXIT     STX     LENGTH                                               100036
+ 160    305A             RSUB                                                         4C0000
+ 165    305D    INPUT    BYTE    X'F1'                                                F1
+ 170    305E    MAXLEN   WORD    4096                                                 004096
+ 175    3061    WRREC    LDX     ZERO                                                 040030
+ 180    3064    WLOOP    TD      OUTPUT                                               E03079
+ 185    3067             JEQ     WLOOP                                                303064
+ 190    306A             LDCH    BUFFER,X                                             508039
+ 195    306D             WD      OUTPUT                                               DC3079
+ 200    3070             TIX     LENGTH                                               2C0036
+ 205    3073             JLT     WLOOP                                                383064
+ 210    3076             RSUB                                                         4C0000
+ 215    3079    OUTPUT   BYTE    X'05'                                                05
+ 220                     END     FIRST                                                
+

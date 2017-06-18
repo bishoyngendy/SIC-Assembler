@@ -1,0 +1,49 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    1000    COPY     START   1000                                                 
+  10    1000    FIRST    STL     RETADR                                               140001
+  15    1003    CLOOP    JSUB    RDREC                                                484030
+  20    1006             LDA     LENGTH                                               00102D
+  25    1009             COMP    =X'00'                                               284036
+  30    100C             JEQ     ENDFIL                                               301015
+  35    100F             JSUB    WRREC                                                48405C
+  40    1012             J       CLOOP                                                3C1003
+  45    1015    ENDFIL   LDA     =C'EOF'                                              004037
+  50    1018             STA     BUFFER                                               0C1030
+  55    101B             LDA     THREE                                                00102A
+  60    101E             STA     LENGTH                                               0C102D
+  65    1021             JSUB    WRREC                                                48405C
+  70    1024             LDL     RETADR                                               080001
+  75    1027             RSUB                                                         4C0000
+  80    102A    THREE    WORD    3                                                    000003
+  85    102D    RETADR   EQU     1                                                          
+  90    102D    LENGTH   RESW    1                                                    
+  95    1030    BUFFER   RESW    4096                                                 
+ 100    4030    RDREC    LDX     =X'00'                                               044036
+ 105    4033             LDA     =X'00'                                               004036
+ 110                     LTORG                                                        
+ 115    4036    *        =X'00'                                                       00
+ 120    4037    *        =C'EOF'                                                      454F46
+ 125    403A    RLOOP    TD      INPUT                                                E04058
+ 130    403D             JEQ     RLOOP                                                30403A
+ 135    4040             RD      INPUT                                                D84058
+ 140    4043             COMP    =X'00'                                               284036
+ 145    4046             JEQ     EXIT                                                 304052
+ 150    4049             STCH    BUFFER,X                                             549030
+ 155    404C             TIX     MAXLEN                                               2C4059
+ 160    404F             JLT     RLOOP                                                38403A
+ 165    4052    EXIT     STX     LENGTH                                               10102D
+ 170    4055             RSUB                                                         4C0000
+ 175    4058    INPUT    BYTE    X'F1'                                                F1
+ 180    4059    MAXLEN   WORD    4096                                                 001000
+ 185    405C    WRREC    LDX     =X'00'                                               044036
+ 190    405F    WLOOP    TD      =X'05'                                               E04062
+ 195                     LTORG                                                        
+ 200    4062    *        =X'05'                                                       05
+ 205    4063             JEQ     WLOOP                                                30405F
+ 210    4066             LDCH    BUFFER,X                                             509030
+ 215    4069             WD      =X'05'                                               DC4062
+ 220    406C             TIX     LENGTH                                               2C102D
+ 225    406F             JLT     WLOOP                                                38405F
+ 230    4072             RSUB                                                         4C0000
+ 235                     END     FIRST                                                

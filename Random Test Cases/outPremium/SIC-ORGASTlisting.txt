@@ -1,0 +1,48 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    1000    COPY     START   1000                                                 
+  10    1000    FIRST    STL     RETADR                                               140001
+  15    1003    CLOOP    JSUB    RDREC                                                484030
+  20    1006             LDA     LENGTH                                               00102D
+  25    1009             COMP    =X'00'                                               284070
+  30    100C             JEQ     ENDFIL                                               301015
+  35    100F             JSUB    WRREC                                                484058
+  40    1012             J       CLOOP                                                3C1003
+  45    1015    ENDFIL   LDA     =C'EOF'                                              004071
+  50    1018             STA     BUFFER                                               0C1030
+  55    101B             LDA     THREE                                                00102A
+  60    101E             STA     LENGTH                                               0C102D
+  65    1021             JSUB    WRREC                                                484058
+  70    1024             LDL     RETADR                                               080001
+  75    1027             RSUB                                                         4C0000
+  80    102A             ORG     *                                                          
+  85    102A    THREE    WORD    3                                                    000003
+  90    102D    RETADR   EQU     1                                                          
+  95    102D    LENGTH   RESW    1                                                    
+ 100    1030    BUFFER   RESW    4096                                                 
+ 105    4030    RDREC    LDX     =X'00'                                               044070
+ 110    4033             LDA     =X'00'                                               004070
+ 115    4036    RLOOP    TD      INPUT                                                E04054
+ 120    4039             JEQ     RLOOP                                                304036
+ 125    403C             RD      INPUT                                                D84054
+ 130    403F             COMP    =X'00'                                               284070
+ 135    4042             JEQ     EXIT                                                 30404E
+ 140    4045             STCH    BUFFER,X                                             549030
+ 145    4048             TIX     MAXLEN                                               2C4055
+ 150    404B             JLT     RLOOP                                                384036
+ 155    404E    EXIT     STX     LENGTH                                               10102D
+ 160    4051             RSUB                                                         4C0000
+ 165    4054    INPUT    BYTE    X'F1'                                                F1
+ 170    4055    MAXLEN   WORD    4096                                                 001000
+ 175    4058    WRREC    LDX     =X'00'                                               044070
+ 180    405B    WLOOP    TD      =X'05'                                               E04074
+ 185    405E             JEQ     WLOOP                                                30405B
+ 190    4061             LDCH    BUFFER,X                                             509030
+ 195    4064             WD      =X'05'                                               DC4074
+ 200    4067             TIX     LENGTH                                               2C102D
+ 205    406A             JLT     WLOOP                                                38405B
+ 210    406D             RSUB                                                         4C0000
+ 215                     END     FIRST                                                
+ 220    4070    *        =X'00'                                                       00
+ 225    4071    *        =C'EOF'                                                      454F46
+ 230    4074    *        =X'05'                                                       05

@@ -1,0 +1,52 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    1000    COPY     START   1000                                                 
+  10    1000    FIRST    STL     RETADR                                               140001
+  15    1003    CLOOP    JSUB    RDREC                                                484030
+  20    1006             LDA     LENGTH                                               00102D
+  25    1009             COMP    =0                                                   284070
+  30    100C             JEQ     ENDFIL                                               301015
+  35    100F             JSUB    WRREC                                                484058
+  40    1012             J       CLOOP                                                3C1003
+  45    1015    ENDFIL   LDA     =C'EOF'                                              004070
+  50    1018             STA     BUFFER                                               0C1030
+  55    101B             LDA     THREE                                                00102A
+  60    101E             STA     LENGTH                                               0C102D
+  65    1021             JSUB    WRREC                                                484058
+  70    1024             LDL     RETADR                                               080001
+  75    1027             RSUB                                                         4C0000
+  80    102A    THREE    WORD    3                                                    000003
+  85    102D    RETADR   EQU     1                                                          
+  90    102D    LENGTH   RESW    1                                                    
+  95    1030    BUFFER   RESW    4096                                                 
+ 100    4030    RDREC    LDX     =0                                                   044070
+ 105    4033             LDA     =0                                                   004070
+ 110    4036    RLOOP    TD      INPUT                                                E04054
+ 115    4039             JEQ     RLOOP                                                304036
+ 120    403C             RD      INPUT                                                D84054
+ 125    403F             COMP    =0                                                   284070
+ 130    4042             JEQ     EXIT                                                 30404E
+ 135    4045             STCH    BUFFER,X                                             549030
+ 140    4048             TIX     MAXLEN                                               2C4055
+ 145    404B             JLT     RLOOP                                                384036
+ 150    404E    EXIT     STX     LENGTH                                               10102D
+ 155    4051             RSUB                                                         4C0000
+ 160    4054    INPUT    BYTE    X'F1'                                                F1
+ 165    4055    MAXLEN   WORD    4096                                                 001000
+ 170    4058    WRREC    LDX     =0                                                   044070
+ 175    405B    WLOOP    TD      =X'05'                                               E04073
+ 180    405E             JEQ     WLOOP                                                30405B
+ 185    4061             LDCH    BUFFER,X                                             509030
+ 190    4064             WD      =X'05'                                               DC4073
+ 195    4067             TIX     LENGTH                                               2C102D
+ 200    406A             JLT     WLOOP                                                38405B
+ 205    406D             RSUB                                                         4C0000
+ 210    4070    STAB     RESB    1100                                                 
+ 215    44BC    SYMBOL   EQU     STAB                                                       
+ 220    44BC    VALUE    EQU     STAB+6                                                     
+ 225    44BC    FLAGS    EQU     STAB+9                                                     
+ 230    44BC             ORG     STAB                                                       
+ 235                     END     FIRST                                                
+ 240    4070    *        =X'0'                                                        0
+ 245    4070    *        =C'EOF'                                                      454F46
+ 250    4073    *        =X'05'                                                       05

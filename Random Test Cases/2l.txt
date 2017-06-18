@@ -1,0 +1,11 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    1000    PRBN01   START   1000                                                 
+  10    1000    STAB     RESB    1100                                                 
+  15    144C             ORG     STAB                                                       
+  20    1000    ALPHA    RESB    6                                                    
+  25    1006    BETA     RESB    3                                                    
+  30    1009    GAMMA    RESB    1                                                    
+  35    100A             ORG     STAB + 1100                                                
+  40    144C             LDA     ALPHA                                                001000
+  45                     END     PRBN01                                               

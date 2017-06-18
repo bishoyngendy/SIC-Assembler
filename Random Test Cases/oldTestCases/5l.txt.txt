@@ -1,0 +1,20 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    1000    PRBN08   START   1000                                                 
+  10    1000             LDA     ZERO                                                 00114D
+  15    1003             STA     INDEX                                                0C1153
+  20    1006    LOOP     LDA     ZERO                                                 00114D
+  25    1009             LDX     INDEX                                                041153
+  30    100C             STA     ALPHA,X                                              0C901E
+  35    100F             LDA     INDEX                                                001153
+  40    1012             ADD     THREE                                                181150
+  45    1015             STA     INDEX                                                0C1153
+  50    1018             COMP    K300                                                 28114A
+  55    101B             JLT     LOOP 		                                              381006
+  60    101E    ALPHA    RESW    100                                                  
+  65    114A    K300     WORD    300                                                  00012C
+  70    114D    ZERO     WORD    0                                                    000000
+  75    1150    THREE    WORD    3                                                    000003
+  80    1153    INDEX    RESW    1                                                    
+  85                     END     PRBN08                                               
+

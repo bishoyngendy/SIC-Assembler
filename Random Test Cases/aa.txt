@@ -1,0 +1,17 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    1000    PRBN01   START   1000                                                 
+  10    1000             LDA     =C'TEST'                                             00100C
+  15    1003             LDA     BETA                                                 000001
+  20    1006             MUL     GAMMA                                                201010
+  25    1009             STA     ALPHA                                                0C0001
+  30                     LTORG                                                        
+  35    100C    *        =C'TEST'                                                     54455354
+  40    1010    ALPHA    EQU     1                                                          
+  45    1010    BETA     EQU     ALPHA                                                      
+  50    1010    DELTA    EQU     BETA - ALPHA                                               
+  55    1010    GAMMA    WORD    4                                                    000004
+  60    1013    DATA     EQU     *                                                          
+  65    1013             LDA     =X'45'                                               001016
+  70                     END     PRBN01                                               
+  75    1016    *        =X'45'                                                       45

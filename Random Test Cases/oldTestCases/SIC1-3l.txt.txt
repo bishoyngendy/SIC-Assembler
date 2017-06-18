@@ -1,0 +1,11 @@
+LINE    LOC                              SOURCE STATEMENT                             OBJECT CODE
+
+   5    1000    PRBN03   START   1000                                                 
+  10    1000             LDA     BETA                                                 00100C
+  15    1003             DIV     GAMMA                                                24100F
+  20    1006             STA     ALPHA                                                0C1009
+  25    1009    ALPHA    RESW    1                                                    
+  30    100C    BETA     WORD    25                                                   000019
+  35    100F    GAMMA    WORD    4                                                    000004
+  40                     END     PRBN03                                               
+
